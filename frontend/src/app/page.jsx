@@ -2,10 +2,11 @@
 import react, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+// OJUG
 export default function Home() {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
-  const [roles, setroles] = useState([]);
+  const [roles, setroles] = useState("");
   const [loginEmail, setloginEmail] = useState("");
   const [loginPassword, setloginPassword] = useState("");
   const [isAdmin, setisAdmin] = useState(false);
@@ -58,11 +59,14 @@ export default function Home() {
   }
 
   const handleRoleChange = (e) => {
-    const selectedOptions = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    console.log(selectedOptions);
+    const { options } = e.target;
+    const selectedOptions = [];
+
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        selectedOptions.push(options[i].value);
+      }
+    }
 
     setroles(selectedOptions);
   };
@@ -88,10 +92,21 @@ export default function Home() {
             value={email}
           />
           <label htmlFor="name">ADD Role : </label>
-          <select multiple onChange={handleRoleChange} className="bg-gray-300">
-            <option value={"p0"}>p0</option>
-            <option value={"p1"}>p1</option>
-            <option value={"p2"}>p2</option>
+          <select
+            multiple
+            onChange={handleRoleChange}
+            value={roles}
+            className="bg-gray-300"
+          >
+            <option key={"p0"} value={"p0"}>
+              p0
+            </option>
+            <option key={"p1"} value={"p1"}>
+              p1
+            </option>
+            <option key={"p2"} value={"p2"}>
+              p2
+            </option>
           </select>
           <button onClick={handleAddUser} className="bg-green-400 m-4">
             ADD User
